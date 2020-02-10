@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <table class="table">
+        <tr>
+            <th>Description</th>
+            <th>Preparation Time</th>
+            <th>Difficulty</th>
+        </tr>
+        <tr th:each="recipe : ${recipes}">
+            <td th:text="${recipe.getDescription()}"></td>
+            <td th:text="${recipe.getPrepTime() + ' ' + 'min.'}"></td>
+            <td th:text="${recipe.getDifficulty()}"></td>
+        </tr>
+    </table>
+</body>
+</html>
