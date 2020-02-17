@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -38,5 +39,18 @@ public class RecipeServiceImplTest {
         Set<Recipe> recipes = recipeService.getRecipes();
         assertEquals(1, recipes.size());
         verify(recipeRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void getRecipeById() {
+        final Long ID = 1L;
+        Recipe recipe = new Recipe();
+        recipe.setId(ID);
+
+        when(recipeRepository.findById(any())).thenReturn(Optional.of(recipe));
+
+        Recipe recipeReturned = recipeService.findById(ID);
+        assertNotNull("Null recipe returned", recipeReturned);
+        verify(recipeRepository, times(1)).findById(ID);
     }
 }

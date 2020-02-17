@@ -18,7 +18,7 @@
         <tr th:each="recipe : ${recipes}">
             <td th:text="${recipe.getDescription()}">Tasty Goodness</td>
             <td th:text="${recipe.getDifficulty()}">HARD</td>
-            <td>View</td>
+            <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.getId()}}">View</a></td>
         </tr>
     </table>
 
