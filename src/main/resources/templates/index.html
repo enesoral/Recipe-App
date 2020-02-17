@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recipes</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 </head>
 <body>
-    <table class="table">
+    <table class="table" th:if="${not #lists.isEmpty(recipes)}">
         <tr>
             <th>Description</th>
-            <th>Preparation Time</th>
             <th>Difficulty</th>
+            <th>Details</th>
         </tr>
         <tr th:each="recipe : ${recipes}">
-            <td th:text="${recipe.getDescription()}"></td>
-            <td th:text="${recipe.getPrepTime() + ' ' + 'min.'}"></td>
-            <td th:text="${recipe.getDifficulty()}"></td>
+            <td th:text="${recipe.getDescription()}">Tasty Goodness</td>
+            <td th:text="${recipe.getDifficulty()}">HARD</td>
+            <td>View</td>
         </tr>
     </table>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
 </body>
 </html>
