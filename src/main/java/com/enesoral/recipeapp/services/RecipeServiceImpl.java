@@ -1,6 +1,8 @@
 package com.enesoral.recipeapp.services;
 
+import com.enesoral.recipeapp.converters.Converter;
 import com.enesoral.recipeapp.domain.Recipe;
+import com.enesoral.recipeapp.dto.RecipeDto;
 import com.enesoral.recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,12 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final Converter converter;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, Converter converter) {
+
         this.recipeRepository = recipeRepository;
+        this.converter = converter;
     }
 
     @Override
@@ -24,7 +29,7 @@ public class RecipeServiceImpl implements RecipeService {
         log.debug("getRecipes called!");
 
         Set<Recipe> recipes = new HashSet<>();
-        recipeRepository.findAll().iterator().forEachRemaining(recipes::add);
+        recipeRepository.findAll().iterator().forEachRemaining(recipe -> recipes.add(recipe));
         return recipes;
     }
 
@@ -37,5 +42,15 @@ public class RecipeServiceImpl implements RecipeService {
             throw new RuntimeException("Recipe Not Found!");
         }
         return recipeOptional.get();
+    }
+
+    @Override
+    public RecipeDto saveRecipeDto(RecipeDto recipeDto) {
+        if (recipeDto == null) {
+            return null;
+        }
+        Recipe savedRecipe = recipeRepository.save(converter.convertToRecipe(recipeDto));
+        log.debug("recipeDto saved with recipeId: " + savedRecipe.getId());
+        return converter.convertToRecipeDto(savedRecipe);
     }
 }
