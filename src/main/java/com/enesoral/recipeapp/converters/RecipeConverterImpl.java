@@ -60,12 +60,12 @@ public class RecipeConverterImpl implements RecipeConverter {
 
         if (recipe.getCategories() != null && recipe.getCategories().size() > 0) {
             recipe.getCategories()
-                    .forEach(category -> recipeDto.getCategories().add(categoryConverter.convertToCategoryDto(category)));
+                    .forEach(category -> recipeDto.addCategory(categoryConverter.convertToCategoryDto(category)));
         }
 
         if (recipe.getIngredients() != null & recipe.getIngredients().size() > 0) {
             recipe.getIngredients()
-                    .forEach(ingredient -> recipeDto.getIngredients().add(ingredientConverter.convertToIngredientDto(ingredient)));
+                    .forEach(ingredient -> recipeDto.addIngredient(ingredientConverter.convertToIngredientDto(ingredient)));
         }
         return recipeDto;
     }
@@ -86,12 +86,12 @@ public class RecipeConverterImpl implements RecipeConverter {
 
         if (recipeDto.getCategories() != null && recipeDto.getCategories().size() > 0) {
             recipeDto.getCategories()
-                    .forEach(categoryDto -> recipe.getCategories().add(categoryConverter.convertToCategory(categoryDto)));
+                    .forEach(categoryDto -> recipe.addCategory(categoryConverter.convertToCategory(categoryDto)));
         }
 
         if (recipeDto.getIngredients() != null & recipeDto.getIngredients().size() > 0) {
             recipeDto.getIngredients()
-                    .forEach(ingredientDto -> recipe.getIngredients().add(ingredientConverter.convertToIngredient(ingredientDto)));
+                    .forEach(ingredientDto -> recipe.addIngredient(ingredientConverter.convertToIngredient(ingredientDto)));
         }
         return recipe;
     }

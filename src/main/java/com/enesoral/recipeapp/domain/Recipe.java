@@ -6,13 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Recipe {
+public class Recipe extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String description;
     private Integer prepTime;
     private Integer cookTime;
@@ -29,6 +27,7 @@ public class Recipe {
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
+    @Setter(value = AccessLevel.NONE)
     @OneToOne(cascade = CascadeType.ALL)
     private Note note;
 
@@ -40,6 +39,11 @@ public class Recipe {
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    public void setNote(Note note) {
+        this.note = note;
+        note.setRecipe(this);
+    }
 
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(ingredient);

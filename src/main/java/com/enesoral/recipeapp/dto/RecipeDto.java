@@ -1,6 +1,7 @@
 package com.enesoral.recipeapp.dto;
 
 import com.enesoral.recipeapp.domain.Difficulty;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,4 +25,12 @@ public class RecipeDto extends BaseEntityDto {
     private NoteDto note;
     private Set<IngredientDto> ingredients = new HashSet<>();
     private Set<CategoryDto> categories = new HashSet<>();
+
+    public void addIngredient(IngredientDto ingredientDto) {
+        this.ingredients.add(ingredientDto);
+    }
+
+    public void addCategory(CategoryDto categoryDto) {
+        this.categories.add(categoryDto);
+    }
 }
