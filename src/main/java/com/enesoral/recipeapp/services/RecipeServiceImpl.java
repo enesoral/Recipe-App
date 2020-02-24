@@ -1,6 +1,6 @@
 package com.enesoral.recipeapp.services;
 
-import com.enesoral.recipeapp.converters.Converter;
+import com.enesoral.recipeapp.converters.RecipeConverter;
 import com.enesoral.recipeapp.domain.Recipe;
 import com.enesoral.recipeapp.dto.RecipeDto;
 import com.enesoral.recipeapp.repositories.RecipeRepository;
@@ -16,12 +16,12 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
-    private final Converter converter;
+    private final RecipeConverter recipeConverter;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository, Converter converter) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeConverter recipeConverter) {
 
         this.recipeRepository = recipeRepository;
-        this.converter = converter;
+        this.recipeConverter = recipeConverter;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipeDto == null) {
             return null;
         }
-        Recipe savedRecipe = recipeRepository.save(converter.convertToRecipe(recipeDto));
+        Recipe savedRecipe = recipeRepository.save(recipeConverter.convertToRecipe(recipeDto));
         log.debug("recipeDto saved with recipeId: " + savedRecipe.getId());
-        return converter.convertToRecipeDto(savedRecipe);
+        return recipeConverter.convertToRecipeDto(savedRecipe);
     }
 }

@@ -1,8 +1,7 @@
 package com.enesoral.recipeapp.services;
 
-import com.enesoral.recipeapp.converters.Converter;
+import com.enesoral.recipeapp.converters.RecipeConverter;
 import com.enesoral.recipeapp.domain.Recipe;
-import com.enesoral.recipeapp.dto.RecipeDto;
 import com.enesoral.recipeapp.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,13 +23,13 @@ public class RecipeServiceImplTest {
     RecipeRepository recipeRepository;
 
     @Mock
-    Converter converter;
+    RecipeConverter recipeConverter;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository, converter);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeConverter);
     }
 
     @Test

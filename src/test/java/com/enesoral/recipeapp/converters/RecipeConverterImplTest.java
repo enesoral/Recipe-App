@@ -7,14 +7,11 @@ import com.enesoral.recipeapp.dto.NoteDto;
 import com.enesoral.recipeapp.dto.RecipeDto;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
 
-public class ConverterImplTest {
+public class RecipeConverterImplTest {
 
     public static final Long RECIPE_ID = 1L;
     public static final Integer COOK_TIME = Integer.valueOf("5");
@@ -31,16 +28,22 @@ public class ConverterImplTest {
     public static final Long INGRED_ID_2 = 4L;
     public static final Long NOTE_ID = 9L;
 
-    Converter converter;
+    RecipeConverter recipeConverter;
+    ModelMapper modelMapper;
 
     @Before
-    public void setUp() throws Exception {
-        converter = new ConverterImpl(new ModelMapper());
+    public void setUp() {
+        modelMapper = new ModelMapper();
+
+        recipeConverter = new RecipeConverterImpl(modelMapper,
+                new CategoryConverterImpl(modelMapper),
+                new IngredientConverterImpl(modelMapper),
+                new NoteConverterImpl(modelMapper));
     }
 
     @Test
     public void testNullObject(){
-        assertNull(converter.convertToRecipeDto(null));
+        assertNull(recipeConverter.convertToRecipeDto(null));
     }
 
     @Test
@@ -79,7 +82,7 @@ public class ConverterImplTest {
         recipe.getIngredients().add(ingredient);
         recipe.getIngredients().add(ingredient2);
 
-        RecipeDto recipeDto = converter.convertToRecipeDto(recipe);
+        RecipeDto recipeDto = recipeConverter.convertToRecipeDto(recipe);
 
         assertNotNull(recipeDto);
         assertEquals(RECIPE_ID, recipeDto.getId());
@@ -94,7 +97,6 @@ public class ConverterImplTest {
         assertEquals(NOTE_ID, recipeDto.getNote().getId());
         assertEquals(2, recipeDto.getCategories().size());
         assertEquals(2, recipeDto.getIngredients().size());
-
     }
 
     @Test
@@ -133,7 +135,7 @@ public class ConverterImplTest {
         recipeDto.getIngredients().add(ingredientDto);
         recipeDto.getIngredients().add(IngredientDto2);
 
-        Recipe recipe = converter.convertToRecipe(recipeDto);
+        Recipe recipe = recipeConverter.convertToRecipe(recipeDto);
 
         assertNotNull(recipe);
         assertEquals(RECIPE_ID, recipe.getId());
