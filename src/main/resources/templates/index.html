@@ -9,18 +9,23 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 </head>
 <body>
-    <table class="table" th:if="${not #lists.isEmpty(recipes)}">
-        <tr>
-            <th>Description</th>
-            <th>Difficulty</th>
-            <th>Details</th>
-        </tr>
-        <tr th:each="recipe : ${recipes}">
-            <td th:text="${recipe.getDescription()}">Tasty Goodness</td>
-            <td th:text="${recipe.getDifficulty()}">HARD</td>
-            <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.getId()}}">View</a></td>
-        </tr>
-    </table>
+    <div class="container">
+        <table class="table" th:if="${not #lists.isEmpty(recipes)}">
+            <tr>
+                <th>Description</th>
+                <th>Difficulty</th>
+                <th><a th:href="@{'/recipe/new'}" class="btn btn-success">Create Recipe</a></th>
+            </tr>
+            <tr th:each="recipe : ${recipes}">
+                <td th:text="${recipe.getDescription()}">Tasty Goodness</td>
+                <td th:text="${recipe.getDifficulty()}">HARD</td>
+                <td>
+                    <a th:href="@{'/recipe/' + ${recipe.getId()} + '/show'}">Detail</a> |
+                    <a th:href="@{'/recipe/' + ${recipe.getId()} + '/update'}">Update</a>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/dist/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
