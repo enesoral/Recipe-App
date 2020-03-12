@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ingredients</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+                <form th:object="${ingredient}" th:action="@{'/ingredient/save'}" method="post">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{recipeId}"/>
+                    <div class="card-group">
+                        <div class="card card-primary">
+                            <div class="card-heading bg-info">
+                                <h1 class="card-title">Edit Ingredient Information</h1>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label>Description:</label>
+                                        <input type="text" class="form-control" th:field="*{description}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label>Amount:</label>
+                                        <input type="number" step="0.01" class="form-control" th:field="*{amount}"/>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>Unit Of Measure:</label>
+                                        <select class="form-control" th:field="*{uom}">
+                                            <option th:each="uom : ${uomList}"
+                                                    th:value="${uom.id}"
+                                                    th:selected="${uom.id.equals(ingredient.uom.id)}"
+                                                    th:text="${uom.description}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary float-right">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+</body>
+</html>

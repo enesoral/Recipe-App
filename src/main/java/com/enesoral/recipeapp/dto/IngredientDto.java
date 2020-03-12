@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 @Setter
 public class IngredientDto extends BaseEntityDto {
 
+    private Long recipeId;
     private String description;
     private BigDecimal amount;
-    private UnitOfMeasure unitOfMeasure;
+    private UnitOfMeasure uom;
 }
