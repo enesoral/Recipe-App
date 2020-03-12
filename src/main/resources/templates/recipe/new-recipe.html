@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>New Recipe</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <form th:action="@{/recipe/save}" th:object="${recipe}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="card card-primary">
+                <div class="card-header bg-info">
+                    <h1 class="card-title">Recipe Information</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <h5>Recipe Description:</h5>
+                            <input type="text" class="form-control" th:field="*{description}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <h5>Categories:</h5>
+                            <div class="col-md-9 form-group">
+                                <div class="row-fluid">
+                                    <th:block th:each="category : ${categoryList}">
+                                        <input type="checkbox" name="cats"
+                                               th:value="${category.getId()}"/>
+                                        <label th:text="${category.getName()}"></label> &nbsp;
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <h5>Prep Time:</h5>
+                            <input type="number" class="form-control" th:field="*{prepTime}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <h5>Cook Time:</h5>
+                            <input type="number" class="form-control" th:field="*{cookTime}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <h5>Difficulty:</h5>
+                            <select class="form-control" th:field="*{difficulty}">
+                                <option th:each="difficultyVal : ${T(com.enesoral.recipeapp.domain.Difficulty).values()}"
+                                        th:value="${difficultyVal.name()}"
+                                        th:text="${difficultyVal.name()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <h5>Servings:</h5>
+                            <input type="number" class="form-control" th:field="*{servings}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <h5>Source:</h5>
+                            <input type="text" class="form-control" th:field="*{source}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <h5>URL:</h5>
+                            <input type="text" class="form-control" th:field="*{url}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary mt-2">
+                <div class="card-header bg-info">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="card-title">Ingredients</h1>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" id="add" class="btn btn-light">Add More</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" id="dynamic-wrap">
+                    <div class="row" id="row0">
+                            <div class="col-md-5">
+                            <label>Description:</label>
+                            <input type="text" class="form-control" th:field="*{ingredients[0].description}"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Amount:</label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{ingredients[0].amount}"/>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Unit Of Measure:</label>
+                            <select class="form-control" th:field="*{ingredients[0].uom}">
+                                <option th:each="uom : ${uomList}"
+                                        th:value="${uom.id}"
+                                        th:text="${uom.description}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button name="remove" id="0" class="btn btn-danger btn_remove mt-4">X</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary mt-2">
+                <div class="card-header bg-info">
+                    <h1 class="card-title">Directions</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" rows="3" th:field="*{directions}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary mt-2">
+                <div class="card-header bg-info">
+                    <h1 class="card-title">Notes</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" rows="3" th:field="*{note.recipeNote}"></textarea>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-success btn-lg float-right mt-3" value="Save Recipe"></input>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            let i = 1;
+            $('#add').click(function () {
+                $("#dynamic-wrap").append(`<div class="row mt-4" id="row${i}"><div class="col-md-5"><label>Description:</label><input type="text" class="form-control" id="ingredients${i}.description" name="ingredients[${i}].description"/></div><div class="col-md-2"><label>Amount:</label><input type="number" step="0.01" class="form-control" id="ingredients${i}.amount" name="ingredients[${i}].amount"/></div><div class="col-md-3"><label>Unit Of Measure:</label><select class="form-control" id="ingredients${i}.uom" name="ingredients[${i}].uom"><option value="2">Tablespoon</option><option value="5">Ounce</option><option value="3">Cup</option><option value="1">Teaspoon</option><option value="6">Each</option><option value="4">Pinch</option><option value="7">Dash</option><option value="8">Pint</option></select></div><div class="col-md-2"><button type="button" name="remove" id="${i}" class="btn btn-danger btn_remove mt-4">X</button></div></div>`);
+                ++i;
+            });
+
+            $(document).on('click', '.btn_remove', function () {
+                const button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+        });
+    </script>
+</body>
+</html>

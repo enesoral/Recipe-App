@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-12 col-md-offset-3">
                 <div class="card">
@@ -68,7 +68,7 @@
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p th:text="${recipe.getUrl()}">recipeapp.enesoral.com</p>
+                                <a th:href="${recipe.getUrl()}">Click and go.</a>
                             </div>
                         </div>
                     </div>
@@ -77,14 +77,14 @@
                     <div class="card-header bg-info">
                         <h1 class="card-title">Ingredients</h1>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <ul>
-                                    <li th:each="ingredient : ${recipe.getIngredients()}"
-                                        th:text="${ingredient.getAmount() + ' ' + ingredient.getUom().getDescription() + ' - ' + ingredient.getDescription()}"></li>
-                                </ul>
-                            </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul>
+                                <li th:each="ingredient : ${recipe.getIngredients()}"
+                                    th:text="${ingredient.getAmount() + ' ' + ingredient.getUom().getDescription() + ' - ' + ingredient.getDescription()}"></li>
+                            </ul>
                         </div>
                     </div>
                 </div>

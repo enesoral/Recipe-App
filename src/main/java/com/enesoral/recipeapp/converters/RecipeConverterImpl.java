@@ -10,6 +10,7 @@ import com.enesoral.recipeapp.dto.RecipeDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Component;
 
 
@@ -23,25 +24,31 @@ public class RecipeConverterImpl implements RecipeConverter {
     private final NoteConverter noteConverter;
 
     private void addSkipFieldsForConvertToDto() {
-        modelMapper.addMappings(new PropertyMap<Recipe, RecipeDto>() {
-            @Override
-            protected void configure() {
-                skip(destination.getCategories());
-                skip(destination.getIngredients());
-                skip(destination.getNote());
-            }
-        });
+        TypeMap<Recipe, RecipeDto> typeMap = modelMapper.getTypeMap(Recipe.class, RecipeDto.class);
+        if (typeMap == null) {
+            modelMapper.addMappings(new PropertyMap<Recipe, RecipeDto>() {
+                @Override
+                protected void configure() {
+                    skip(destination.getCategories());
+                    skip(destination.getIngredients());
+                    skip(destination.getNote());
+                }
+            });
+        }
     }
 
     private void addSkipFieldsForConvertToDomain() {
-        modelMapper.addMappings(new PropertyMap<RecipeDto, Recipe>() {
-            @Override
-            protected void configure() {
-                skip(destination.getCategories());
-                skip(destination.getIngredients());
-                skip(destination.getNote());
-            }
-        });
+        TypeMap<RecipeDto, Recipe> typeMap = modelMapper.getTypeMap(RecipeDto.class, Recipe.class);
+        if (typeMap == null) {
+            modelMapper.addMappings(new PropertyMap<RecipeDto, Recipe>() {
+                @Override
+                protected void configure() {
+                    skip(destination.getCategories());
+                    skip(destination.getIngredients());
+                    skip(destination.getNote());
+                }
+            });
+        }
     }
 
     @Override

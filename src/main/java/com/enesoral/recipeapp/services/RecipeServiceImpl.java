@@ -45,6 +45,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public RecipeDto findDtoById(Long l) {
+        return recipeConverter.convertToRecipeDto(findById(l));
+    }
+
+    @Override
     public RecipeDto saveRecipeDto(RecipeDto recipeDto) {
         if (recipeDto == null) {
             return null;

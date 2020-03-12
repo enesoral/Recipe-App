@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Recipe</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <form th:action="@{/recipe/save}" th:object="${recipe}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <div class="card card-primary">
+                <div class="card-header bg-info">
+                    <h1 class="card-title">Edit Recipe Information</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <h5>Recipe Description:</h5>
+                            <input type="text" class="form-control" th:field="*{description}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <h5>Categories:</h5>
+                            <div class="col-md-9 form-group">
+                                <div class="row-fluid">
+                                    <th:block th:each="category : ${categoryList}">
+                                        <input type="checkbox" name="cats"
+                                               th:checked="${selectedCats.contains(category.getId())}"
+                                               th:value="${category.getId()}"/>
+                                        <label th:text="${category.getName()}"></label> &nbsp;
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <h5>Prep Time:</h5>
+                            <input type="number" class="form-control" th:field="*{prepTime}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <h5>Cook Time:</h5>
+                            <input type="number" class="form-control" th:field="*{cookTime}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <h5>Difficulty:</h5>
+                            <select class="form-control" th:field="*{difficulty}">
+                                <option th:each="difficultyVal : ${T(com.enesoral.recipeapp.domain.Difficulty).values()}"
+                                        th:value="${difficultyVal.name()}"
+                                        th:text="${difficultyVal.name()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <h5>Servings:</h5>
+                            <input type="number" class="form-control" th:field="*{servings}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <h5>Source:</h5>
+                            <input type="text" class="form-control" th:field="*{source}"/>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <h5>URL:</h5>
+                            <input type="text" class="form-control" th:field="*{url}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary mt-2">
+                <div class="card-header bg-info">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <h1 class="card-title">Ingredients</h1>
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn btn-light" th:href="@{'/ingredient/' + ${recipe.getId()} + '/new'}">New</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipe.getIngredients())}">
+                        <table class="table table-hover ">
+                            <tr th:each="ingredient : ${recipe.getIngredients()}">
+                                <td th:text="${ingredient.getAmount()} + ' ' + ${ingredient.getUom().getDescription()}
+                                    + ' - ' + ${ingredient.getDescription()}">
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary"
+                                       th:href="@{'/ingredient/' + ${ingredient.getId()} + '/update'}">Update</a>
+                                    <a class="btn btn-primary" onclick="return confirm('Are you sure?');"
+                                       th:href="@{'/ingredient/' + ${ingredient.getId()} + '/delete'}">Delete</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary mt-2">
+                <div class="card-header bg-info">
+                    <h1 class="card-title">Directions</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" rows="3" th:field="*{directions}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary mt-2">
+                <div class="card-header bg-info">
+                    <h1 class="card-title">Notes</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea class="form-control" rows="3" th:field="*{note.recipeNote}"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg float-right mt-3">Update Recipe</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
