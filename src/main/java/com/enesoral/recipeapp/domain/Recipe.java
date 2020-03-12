@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @Entity
 public class Recipe extends BaseEntity{
 
@@ -27,7 +27,6 @@ public class Recipe extends BaseEntity{
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
 
-    @Setter(value = AccessLevel.NONE)
     @OneToOne(cascade = CascadeType.ALL)
     private Note note;
 
@@ -41,8 +40,10 @@ public class Recipe extends BaseEntity{
     private Set<Category> categories = new HashSet<>();
 
     public void setNote(Note note) {
-        this.note = note;
-        note.setRecipe(this);
+        if (note != null) {
+            this.note = note;
+            note.setRecipe(this);
+        }
     }
 
     public void addIngredient(Ingredient ingredient) {
