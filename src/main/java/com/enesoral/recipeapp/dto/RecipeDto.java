@@ -23,6 +23,7 @@ public class RecipeDto extends BaseEntityDto {
     private String source;
     private String url;
     private String directions;
+    private Byte[] image;
     private Difficulty difficulty;
     private NoteDto note;
     private List<IngredientDto> ingredients = new ArrayList<>();

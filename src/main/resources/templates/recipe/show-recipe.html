@@ -14,19 +14,32 @@
             <div class="col-md-12 col-md-offset-3">
                 <div class="card">
                     <div class="card-header bg-info">
-                        <h1 class="card-title" th:text="${recipe.getDescription()}">Recipe Description!</h1>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
+                            </div>
+
+                            <div class="col-md-2">
+                                <a class="btn btn-light"
+                                   th:href="@{'/file/' + ${recipe.id} + '/image'}" role="button">Change Image</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3">
                                 <h5>Categories:</h5>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-3">
                                 <ul>
                                     <li th:each="category : ${recipe.getCategories()}" th:text="${category.getName()}">
                                         Category One
                                     </li>
                                 </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <img th:src="@{'/file/' + ${recipe.id} + '/recipeimage'}" class="mb-3"
+                                     width="350" height="200">
                             </div>
                         </div>
                         <div class="row">
