@@ -48,6 +48,12 @@ public class RecipeController {
         return "recipe/update-recipe";
     }
 
+    @GetMapping("/{id}/delete")
+    public String deleteRecipe(@PathVariable String id) {
+        recipeService.deleteById(Long.parseLong(id));
+        return "redirect:/";
+    }
+
     @PostMapping("/save")
     public String saveOrUpdate(@ModelAttribute RecipeDto recipeDto,
                                @RequestParam(value = "cats", required = false) int[] cats) {

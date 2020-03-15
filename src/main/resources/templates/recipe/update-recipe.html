@@ -125,6 +125,12 @@
                     </div>
                     <button type="submit" class="btn btn-success btn-lg float-right mt-3">Update Recipe</button>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-danger float-right mr-4 mb-4" onclick="return confirm('Are you sure?');"
+                           th:href="@{'/recipe/' + ${recipe.getId()} + '/delete'}">Delete Recipe</a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
