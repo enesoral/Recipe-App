@@ -2,9 +2,13 @@ package com.enesoral.recipeapp.services;
 
 import com.enesoral.recipeapp.converters.IngredientConverter;
 import com.enesoral.recipeapp.domain.Ingredient;
+import com.enesoral.recipeapp.domain.Recipe;
 import com.enesoral.recipeapp.dto.IngredientDto;
+import com.enesoral.recipeapp.exceptions.NotFoundException;
 import com.enesoral.recipeapp.repositories.IngredientRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
@@ -18,7 +22,11 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient findById(Long id) {
-        return ingredientRepository.findById(id).orElse(null);
+        Optional<Ingredient> ingredientOptional = ingredientRepository.findById(id);
+        if (!ingredientOptional.isPresent()) {
+            throw new NotFoundException("Ingredient not found for id value: " + id);
+        }
+        return ingredientOptional.get();
     }
 
     @Override

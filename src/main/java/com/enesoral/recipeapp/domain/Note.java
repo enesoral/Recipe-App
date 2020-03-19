@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"recipe"})
+@EqualsAndHashCode(exclude = {"recipe"}, callSuper = false)
 @Entity
 public class Note extends BaseEntity {
 

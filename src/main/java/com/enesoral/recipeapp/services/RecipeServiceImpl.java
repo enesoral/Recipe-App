@@ -3,6 +3,7 @@ package com.enesoral.recipeapp.services;
 import com.enesoral.recipeapp.converters.RecipeConverter;
 import com.enesoral.recipeapp.domain.Recipe;
 import com.enesoral.recipeapp.dto.RecipeDto;
+import com.enesoral.recipeapp.exceptions.NotFoundException;
 import com.enesoral.recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe not found for id value: " + l);
         }
         return recipeOptional.get();
     }

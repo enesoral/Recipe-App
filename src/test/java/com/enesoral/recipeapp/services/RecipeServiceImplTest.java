@@ -2,6 +2,7 @@ package com.enesoral.recipeapp.services;
 
 import com.enesoral.recipeapp.converters.RecipeConverter;
 import com.enesoral.recipeapp.domain.Recipe;
+import com.enesoral.recipeapp.exceptions.NotFoundException;
 import com.enesoral.recipeapp.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,5 +57,12 @@ public class RecipeServiceImplTest {
         Recipe recipeReturned = recipeService.findById(ID);
         assertNotNull(recipeReturned);
         verify(recipeRepository, times(1)).findById(ID);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        Recipe recipeReturned = recipeService.findById(1L);
     }
 }
