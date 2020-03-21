@@ -20,7 +20,8 @@
                     <div class="row">
                         <div class="col-md-3 form-group">
                             <h5>Recipe Description:</h5>
-                            <input type="text" class="form-control" th:field="*{description}"/>
+                            <input type="text" class="form-control" required
+                                   minlength="10" maxlength="255" th:field="*{description}"/>
                         </div>
                     </div>
                     <div class="row">
@@ -40,11 +41,11 @@
                     <div class="row">
                         <div class="col-md-3 form-group">
                             <h5>Prep Time:</h5>
-                            <input type="number" class="form-control" th:field="*{prepTime}"/>
+                            <input type="number" class="form-control" min="1" max="999" th:field="*{prepTime}"/>
                         </div>
                         <div class="col-md-3 form-group">
                             <h5>Cook Time:</h5>
-                            <input type="number" class="form-control" th:field="*{cookTime}"/>
+                            <input type="number" class="form-control" min="1" max="999" th:field="*{cookTime}"/>
                         </div>
                         <div class="col-md-3 form-group">
                             <h5>Difficulty:</h5>
@@ -58,7 +59,7 @@
                     <div class="row">
                         <div class="col-md-3 form-group">
                             <h5>Servings:</h5>
-                            <input type="number" class="form-control" th:field="*{servings}"/>
+                            <input type="number" class="form-control" min="1" max="100" th:field="*{servings}"/>
                         </div>
                         <div class="col-md-3 form-group">
                             <h5>Source:</h5>
@@ -66,7 +67,7 @@
                         </div>
                         <div class="col-md-3 form-group">
                             <h5>URL:</h5>
-                            <input type="text" class="form-control" th:field="*{url}"/>
+                            <input type="url" class="form-control" th:field="*{url}"/>
                         </div>
                     </div>
                 </div>
@@ -113,7 +114,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <textarea class="form-control" rows="3" th:field="*{directions}"></textarea>
+                            <textarea class="form-control" rows="3" required th:field="*{directions}"></textarea>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,10 @@ import com.enesoral.recipeapp.services.UnitOfMeasureService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -55,8 +58,18 @@ public class RecipeController {
     }
 
     @PostMapping("/save")
-    public String saveOrUpdate(@ModelAttribute RecipeDto recipeDto,
-                               @RequestParam(value = "cats", required = false) int[] cats) {
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeDto recipeDto,
+                               @RequestParam(value = "cats", required = false) int[] cats,
+                               BindingResult result) {
+
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(objectError -> {
+                log.debug(objectError.toString());
+            });
+
+            return "redirect:/recipe/new";
+        }
+
         if (cats != null) {
             CategoryDto category = null;
             for (int id : cats) {

@@ -67,4 +67,34 @@ public class RecipeControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("error"));
     }
+
+    @Test
+    public void testPostNewRecipeForm() throws Exception {
+        RecipeDto recipeDto = new RecipeDto();
+        recipeDto.setId(2L);
+
+        when(recipeService.saveRecipeDto(any())).thenReturn(recipeDto);
+
+        mockMvc.perform(post("/recipe/save")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "")
+                .param("description", "some string")
+                .param("directions", "some directions")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/2/show"));
+    }
+
+    @Test
+    public void testPostNewRecipeFormValidationFail() throws Exception {
+        RecipeDto recipeDto = new RecipeDto();
+        recipeDto.setId(2L);
+
+        when(recipeService.saveRecipeDto(any())).thenReturn(recipeDto);
+
+        mockMvc.perform(post("/recipe/save")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", ""))
+                        .andExpect(status().isBadRequest());
+    }
 }
