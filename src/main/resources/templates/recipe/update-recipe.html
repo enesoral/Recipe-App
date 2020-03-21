@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:insert="fragments/layout :: head"></th:block>
     <title>Edit Recipe</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 </head>
 <body>
+    <th:block th:insert="fragments/layout :: header"></th:block>
     <div class="container">
         <form th:action="@{/recipe/save}" th:object="${recipe}" method="post">
             <input type="hidden" th:field="*{id}"/>
@@ -134,5 +131,6 @@
             </div>
         </form>
     </div>
+    <th:block th:insert="fragments/layout :: footer"></th:block>
 </body>
 </html>

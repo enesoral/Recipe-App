@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:insert="fragments/layout :: head"></th:block>
     <title>Recipes</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
 </head>
 <body>
+    <th:block th:insert="fragments/layout :: header"></th:block>
     <div class="container">
-        <table class="table" th:if="${not #lists.isEmpty(recipes)}">
+        <table class="table table-dark table-striped" th:if="${not #lists.isEmpty(recipes)}">
             <tr>
                 <th>Description</th>
                 <th>Difficulty</th>
-                <th><a th:href="@{'/recipe/new'}" class="btn btn-success">Create Recipe</a></th>
+                <th></th>
             </tr>
             <tr th:each="recipe : ${recipes}">
                 <td th:text="${recipe.getDescription()}">Tasty Goodness</td>
                 <td th:text="${recipe.getDifficulty()}">HARD</td>
                 <td>
-                    <a th:href="@{'/recipe/' + ${recipe.getId()} + '/show'}">Detail</a> |
-                    <a th:href="@{'/recipe/' + ${recipe.getId()} + '/update'}">Update</a>
+                    <a class="btn btn-info" th:href="@{'/recipe/' + ${recipe.getId()} + '/show'}">Detail</a>
+                    <a class="btn btn-warning" th:href="@{'/recipe/' + ${recipe.getId()} + '/update'}">Update</a>
                 </td>
             </tr>
         </table>
     </div>
-
-    <script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/dist/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+    <th:block th:insert="fragments/layout :: footer"></th:block>
 </body>
 </html>
