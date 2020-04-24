@@ -1,4 +1,4 @@
-# Spring Recipe Sample Application [![Build Status](https://circleci.com/gh/enesoral/Recipe-App.svg?style=svg)](https://circleci.com/gh/enesoral/Recipe-App)
+# Spring Recipe Sample Application [![Build Status](https://circleci.com/gh/enesoral/Recipe-App.svg?style=svg)](https://circleci.com/gh/enesoral/Recipe-App) [![codecov](https://codecov.io/gh/enesoral/Recipe-App/branch/master/graph/badge.svg)](https://codecov.io/gh/enesoral/Recipe-App)
 
 ## Use cases of the Recipe Application 
 
